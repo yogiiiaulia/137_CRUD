@@ -98,4 +98,17 @@ app.put('/biodata/:id', async (req, res) => {
 
 });
 
-//delete
+app.delete('/biodata/:id', async (req, res) => {
+
+    const { id } = req.params;
+
+    try {
+
+        const result = await pool.query(
+            `DELETE FROM biodata
+             WHERE Id = $1
+             RETURNING *`,
+            [id]
+        );
+
+        
