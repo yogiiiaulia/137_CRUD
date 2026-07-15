@@ -60,6 +60,29 @@ app.post('/biodata', async (req, res) => {
 
 });
 
-//put
+app.put('/biodata/:id', async (req, res) => {
+
+    const { id } = req.params;
+    const { nama, nim, kelas } = req.body;
+
+    try {
+
+        const result = await pool.query(
+            `UPDATE biodata
+             SET Nama = $1,
+                 NIM = $2,
+                 Kelas = $3
+             WHERE Id = $4
+             RETURNING *`,
+            [nama, nim, kelas, id]
+        );
+
+        if (result.rowCount === 0) {
+            return res.status(404).json({
+                message: "Data tidak ditemukan"
+            });
+        }
+
+        
 
 //delete
