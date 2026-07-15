@@ -111,4 +111,23 @@ app.delete('/biodata/:id', async (req, res) => {
             [id]
         );
 
-        
+        if (result.rowCount === 0) {
+            return res.status(404).json({
+                message: "Data tidak ditemukan"
+            });
+        }
+
+        res.status(200).json({
+            message: "Data berhasil dihapus",
+            data: result.rows[0]
+        });
+
+    } catch (err) {
+        console.error(err.message);
+
+        res.status(500).json({
+            error: err.message
+        });
+    }
+
+});
