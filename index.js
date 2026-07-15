@@ -50,7 +50,15 @@ app.post('/biodata', async (req, res) => {
             data: result.rows[0]
         });
 
-    
+    } catch (err) {
+        console.error(err.message);
+
+        res.status(500).json({
+            error: err.message
+        });
+    }
+
+});
 
 //put
 
