@@ -32,7 +32,25 @@ app.listen(port, () => {
   console.log(`Server berjalan di http://localhost:${port}`);
 });
 
+app.post('/biodata', async (req, res) => {
 
+    const { id, nama, nim, kelas } = req.body;
+
+    try {
+
+        const result = await pool.query(
+            `INSERT INTO biodata (Id, Nama, NIM, Kelas)
+             VALUES ($1, $2, $3, $4)
+             RETURNING *`,
+            [id, nama, nim, kelas]
+        );
+
+        res.status(201).json({
+            message: "Data berhasil ditambahkan",
+            data: result.rows[0]
+        });
+
+    
 
 //put
 
